@@ -26,3 +26,28 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler:
+       arguments:
+            - 'mysql:dbname=default; host=mysql; port=3306'
+            - { db_username: default, db_password: secret }
+
+    # Tried adding Redis here but it does not seem to work and I can not work out how to
+    # change it in a reasonable amount of time.
+#    services:
+#      Redis:
+#        class: Redis
+#        calls:
+#          - method: connect
+#            arguments:
+#              - '%env(REDIS_HOST)%'
+#              - '%env(int:REDIS_PORT)%'
+#          # If you need key prefix, uncomment line belows
+#          # - method: setOption
+#          #   arguments:
+#          #       - !php/const Redis::OPT_PREFIX
+#          #       - 'my_prefix'
+#
+#      Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+#        arguments:
+#          - '@Redis'
